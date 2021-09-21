@@ -33,6 +33,7 @@ def scrape(url):
 
 
 def process_data(data):
+    if data:
     # Q_A
     # if data['answers'] and data['questions']:
 
@@ -51,77 +52,78 @@ def process_data(data):
 
     #     data['q_a'] = q_a
 
-    if data['bsr']:
-        bsr = data['bsr'].replace(
-            'Best Sellers Rank', '').replace(':', '').strip()
-        bsr = re.sub('\(\s.*\s\)', ',', bsr)
-        bsr = bsr.split(' , ')
+        if data['bsr']:
+            bsr = data['bsr'].replace(
+                'Best Sellers Rank', '').replace(':', '').strip()
+            bsr = re.sub('\(\s.*\s\)', ',', bsr)
+            bsr = bsr.split(' , ')
 
-        rankings = []
+            rankings = []
 
-        # Gets Main Ranking
-        # For ex; 42 in Pet Supplies ==> [#42,Pet Supplies ]
-        cat_ranking = bsr[0].split('in')
-        ranking = cat_ranking[0].replace('#', '').replace(
-            ',', "").strip()  # [#42] ==> 42
-        category = cat_ranking[1].strip()  # Pet Supplies
-        cat_ranking = {'Main Category': category,
-                       'Main Category Ranking': ranking}
-        rankings.append(cat_ranking)
+            # Gets Main Ranking
+            # For ex; 42 in Pet Supplies ==> [#42,Pet Supplies ]
+            cat_ranking = bsr[0].split('in')
+            ranking = cat_ranking[0].replace('#', '').replace(
+                ',', "").strip()  # [#42] ==> 42
+            category = cat_ranking[1].strip()  # Pet Supplies
+            cat_ranking = {'Main Category': category,
+                        'Main Category Ranking': ranking}
+            rankings.append(cat_ranking)
 
-        if bsr[1]:
-            sub_cat_ranking = bsr[1].split('#')[1]
-            sub_cat_ranking = sub_cat_ranking.split('in')
-            sub_ranking = sub_cat_ranking[0].replace(
-                '#', '').replace(',', "").strip()
-            sub_category = sub_cat_ranking[1].strip()
-            sub_cat_ranking = {'Sub Category': sub_category,
-                               'Sub Category Ranking': sub_ranking}
-            rankings.append(sub_cat_ranking)
+            if bsr[1]:
+                sub_cat_ranking = bsr[1].split('#')[1]
+                sub_cat_ranking = sub_cat_ranking.split('in')
+                sub_ranking = sub_cat_ranking[0].replace(
+                    '#', '').replace(',', "").strip()
+                sub_category = sub_cat_ranking[1].strip()
+                sub_cat_ranking = {'Sub Category': sub_category,
+                                'Sub Category Ranking': sub_ranking}
+                rankings.append(sub_cat_ranking)
 
-        data['ranking'] = rankings
+            data['ranking'] = rankings
 
-    if data['rating']:
-        rating = data['rating']
-        rating = rating.split('out')[0].strip()
-        data['rating'] = rating
+        if data['rating']:
+            rating = data['rating']
+            rating = rating.split('out')[0].strip()
+            data['rating'] = rating
 
-    if data['no_of_reviews']:
-        nor = data['no_of_reviews']
-        nor = nor.split(' ')[0].strip()
-        nor = nor.replace(',', "")
+        if data['no_of_reviews']:
+            nor = data['no_of_reviews']
+            nor = nor.split(' ')[0].strip()
+            nor = nor.replace(',', "")
 
-        data['no_of_reviews'] = nor
+            data['no_of_reviews'] = nor
 
-    if data['products_bought_together']:
-        x = data['products_bought_together']
-        x.pop(0)
-        data['products_bought_together'] = x
+        if data['products_bought_together']:
+            x = data['products_bought_together']
+            x.pop(0)
+            data['products_bought_together'] = x
 
-    if data['variants']:
-        variants = data['variants']
-        variants = list(filter(lambda a: a != '', variants))
-        data['variants'] = variants
+        if data['variants']:
+            variants = data['variants']
+            variants = list(filter(lambda a: a != '', variants))
+            data['variants'] = variants
 
-    if data['brand']:
-        brand = data['brand']
-        if 'Visit the' in brand:
-            brand = brand.replace('Visit the ', "").strip()
-        elif 'Brand:' in brand:
-            brand = brand.replace('Brand:', "").strip()
-        elif 'Brand' in brand:
-            brand = brand.replace('Brand', "").strip()
+        if data['brand']:
+            brand = data['brand']
+            if 'Visit the' in brand:
+                brand = brand.replace('Visit the ', "").strip()
+            elif 'Brand:' in brand:
+                brand = brand.replace('Brand:', "").strip()
+            elif 'Brand' in brand:
+                brand = brand.replace('Brand', "").strip()
 
-        data['brand'] = brand
+            data['brand'] = brand
 
-    bullet_points = data['bullet_points']
+        bullet_points = data['bullet_points']
 
-    if bullet_points:
-        bullet_dict = {}
+        if bullet_points:
+            bullet_dict = {}
 
-        for x in range(0, len(bullet_points)):
-            bullet_dict[x] = bullet_points[x]
+            for x in range(0, len(bullet_points)):
+                bullet_dict[x] = bullet_points[x]
 
-        data['bullet_points'] = bullet_dict
-
+            data['bullet_points'] = bullet_dict
+    else:
+        data={"none":"none"}
     return data
