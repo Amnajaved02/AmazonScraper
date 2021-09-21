@@ -3,7 +3,7 @@ import requests
 import re
 
 
-e = Extractor.from_yaml_file('static/selectors/selectors.yml')
+e = Extractor.from_yaml_file('scraper_app/static/selectors/selectors.yml')
 
 def scrape(url):
 

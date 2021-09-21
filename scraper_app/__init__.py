@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from functions import process_data, scrape
+from .functions import process_data, scrape
 
 app = Flask(__name__)
 
@@ -17,7 +17,3 @@ def index():
             data_available = True
 
     return render_template('index.html', data_available=data_available, data=data)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
