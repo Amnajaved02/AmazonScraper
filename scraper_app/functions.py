@@ -34,22 +34,22 @@ def scrape(url):
 
 def process_data(data):
     # Q_A
-    if data['answers'] and data['questions']:
+    # if data['answers'] and data['questions']:
 
-        A = data['answers']
-        questions = data['questions']
-        for ans in range(0, len(A) - 1):
-            if A[ans] == 'Answer this question':
-                continue
-            elif ans < len(A) and A[ans][0:50] == A[ans + 1][0:50]:
-                A[ans] = ''
-        q_a = []
-        A = list(filter(lambda a: a != '', A))
-        print('A : {}'.format(A))
-        for m in range(0, len(A)):
-            q_a.append({'Question': questions[m], 'Answer': A[m]})
+    #     A = data['answers']
+    #     questions = data['questions']
+    #     for ans in range(0, len(A) - 1):
+    #         if A[ans] == 'Answer this question':
+    #             continue
+    #         elif ans < len(A) and A[ans][0:50] == A[ans + 1][0:50]:
+    #             A[ans] = ''
+    #     q_a = []
+    #     A = list(filter(lambda a: a != '', A))
+    #     print('A : {}'.format(A))
+    #     for m in range(0, len(A)):
+    #         q_a.append({'Question': questions[m], 'Answer': A[m]})
 
-        data['q_a'] = q_a
+    #     data['q_a'] = q_a
 
     if data['bsr']:
         bsr = data['bsr'].replace(
