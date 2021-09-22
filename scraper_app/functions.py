@@ -33,7 +33,6 @@ def scrape(url):
 
 
 def process_data(data):
-    
     if data:
         if data['bsr']:
             bsr = data['bsr'].replace(
