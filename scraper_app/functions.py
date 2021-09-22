@@ -33,25 +33,8 @@ def scrape(url):
 
 
 def process_data(data):
+    
     if data:
-    # Q_A
-    # if data['answers'] and data['questions']:
-
-    #     A = data['answers']
-    #     questions = data['questions']
-    #     for ans in range(0, len(A) - 1):
-    #         if A[ans] == 'Answer this question':
-    #             continue
-    #         elif ans < len(A) and A[ans][0:50] == A[ans + 1][0:50]:
-    #             A[ans] = ''
-    #     q_a = []
-    #     A = list(filter(lambda a: a != '', A))
-    #     print('A : {}'.format(A))
-    #     for m in range(0, len(A)):
-    #         q_a.append({'Question': questions[m], 'Answer': A[m]})
-
-    #     data['q_a'] = q_a
-
         if data['bsr']:
             bsr = data['bsr'].replace(
                 'Best Sellers Rank', '').replace(':', '').strip()
@@ -60,12 +43,9 @@ def process_data(data):
 
             rankings = []
 
-            # Gets Main Ranking
-            # For ex; 42 in Pet Supplies ==> [#42,Pet Supplies ]
             cat_ranking = bsr[0].split('in')
-            ranking = cat_ranking[0].replace('#', '').replace(
-                ',', "").strip()  # [#42] ==> 42
-            category = cat_ranking[1].strip()  # Pet Supplies
+            ranking = cat_ranking[0].replace('#', '').replace(',', "").strip() 
+            category = cat_ranking[1].strip() 
             cat_ranking = {'Main Category': category,
                         'Main Category Ranking': ranking}
             rankings.append(cat_ranking)
@@ -73,8 +53,7 @@ def process_data(data):
             if bsr[1]:
                 sub_cat_ranking = bsr[1].split('#')[1]
                 sub_cat_ranking = sub_cat_ranking.split('in')
-                sub_ranking = sub_cat_ranking[0].replace(
-                    '#', '').replace(',', "").strip()
+                sub_ranking = sub_cat_ranking[0].replace('#', '').replace(',', "").strip()
                 sub_category = sub_cat_ranking[1].strip()
                 sub_cat_ranking = {'Sub Category': sub_category,
                                 'Sub Category Ranking': sub_ranking}
